@@ -1,0 +1,173 @@
+\documentclass[12pt]{article}
+
+\usepackage[a4paper, margin=2cm]{geometry}
+
+\usepackage{amsmath}
+\usepackage{algorithm}
+\usepackage{microtype}
+\usepackage[noend]{algpseudocode}
+\usepackage[dvipsnames]{xcolor}
+
+% Define tab size for indentation
+\algrenewcommand\algorithmicindent{2em}%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BLOCKS - \block[]
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% State, like all blocks ends with \asdend
+\algblockdefx[asdstate]{asdstate}{asdend}
+{\textbf{State}}{}
+
+% Upon
+\algblockdefx[asdupon]{asdupon}{asdend}
+[1][Unknown]{\textbf{Upon} #1 \textbf{Do}}{}
+\algblockdefx[asdupontimer]{asdupontimer}{asdend}
+[1][Unknown]{\textbf{Upon Timer} #1 \textbf{Do}}{}
+
+% Foreach
+\algblockdefx[asdforeach]{asdforeach}{asdend}
+[1][Unknown]{\textbf{Foreach} #1 \textbf{Do}}{}
+
+% If
+\algblockdefx[asdif]{asdif}{asdend}
+[1][Unknown]{\textbf{If} (#1) \textbf{Then}}{}
+
+% Else for If
+\algcblockdefx[asdelse]{asdif}{asdelse}{asdend}
+{\textbf{Else}}{}
+
+% Else for Else If
+\algcblockdefx[asdelse2]{asdelseif}{asdelse2}{asdend}
+{\textbf{Else}}{}
+
+% Else If
+\algcblockdefx[asdelseif]{asdif}{asdelseif}{asdend}
+[1][Unknown]{\textbf{Else If} (#1) \textbf{Then}}{}
+
+% Interface
+\algblockdefx[asdinterface]{asdinterface}{asdend}
+{\textbf{Interface}}{}
+
+% Requests
+\algblockdefx[asdrequests]{asdrequests}{asdend}
+{\textbf{Requests}}{}
+
+% Indications
+\algblockdefx[asdindications]{asdindications}{asdend}
+{\textbf{Indications}}{}
+
+\newcommand{\state}[1]{\State #1;}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% STATEMENTS - \statement{} or \statement{}{}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Trigger
+\newcommand{\asdtrigger}[1]{\state{\textbf{Trigger} #1}}
+
+% Timer
+\newcommand{\asdsetuptimer}[1]{\state{\textbf{Setup Timer} #1}}
+\newcommand{\asdsetupptimer}[1]{\state{\textbf{Setup Periodic Timer} #1}}
+\newcommand{\asdcanceltimer}[1]{\state{\textbf{Cancel Timer} #1}}
+
+% Call
+\newcommand{\asdcall}[1]{\state{\textbf{Call} #1}}
+
+% Return
+\newcommand{\asdreturn}[0]{\state{\textbf{Return}}}
+
+% Comment (entire line)
+\newcommand{\asdlinecomment}[1]{\State {\color{OliveGreen}\space //\space #1}}
+
+% Comment (inline)
+\newcommand{\asdcomment}[1]{{\color{OliveGreen}\space //\space #1}}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% VALUES
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Booleans
+\newcommand{\asdfalse}[0]{$false$}
+\newcommand{\asdtrue}[0]{$true$}
+
+% Map
+\newcommand{\asdmap}[2]{#1{[}#2{]}}
+
+% Set 
+\newcommand{\asdset}[1]{$\{$#1$\}$}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Algebraic
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Equals (assignment)
+\newcommand{\asdassign}[2]{\state{#1 $\longleftarrow$ #2}}
+
+% Equals (comparison)
+\newcommand{\asdeq}[2]{#1 $=$ #2}
+
+% Not equals
+\newcommand{\asdneq}[2]{#1 $\neq$ #2}
+
+% And
+\newcommand{\asdand}[2]{#1 $\wedge$ #2}
+
+% Or
+\newcommand{\asdor}[2]{#1 $\vee$ #2}
+
+% Except
+\newcommand{\asdexcept}[2]{#1 $\setminus$ #2}
+
+% Union
+\newcommand{\asdunion}[2]{#1 $\bigcup$ #2}
+
+
+% Belongs to
+\newcommand{\asdin}[2]{#1 $\in$ #2}
+
+% Not belongs to
+\newcommand{\asdnotin}[2]{#1 $\notin$ #2}
+
+\begin{document}		
+\begin{algorithmic}[1]
+	
+	\asdstate
+		\state{delivered} \asdcomment{set of all delivered message ids} 
+		\state{crashedProcesses} \asdcomment{map of crashed process ids} 
+	\asdend
+	
+	
+	\asdupon[Init]
+		\asdassign{delivered}{\asdset{}}
+		\asdassign{crashedProcesses}{\asdset{}}
+	\asdend
+	
+	\asdupon[rbBroadcast(m)]
+		\asdtrigger{rbDeliver(m)}
+		\asdassign{mid}{generateUniqueID(m)}
+		\asdassign{delivered}{\asdunion{delivered}{\asdset{mid}}}
+		\asdtrigger{bebBroadcast(mid, m)}
+	\asdend	
+	
+	\asdupon[bebDeliver(p, mid, m)]
+		\asdif[\asdnotin{mid}{delivered}]
+			\asdassign{delivered}{\asdunion{delivered}{\asdset{mid}}}
+			\asdtrigger{rbDeliver(m)}
+			
+			\State
+			
+			\asdlinecomment{check if sender process hasn't crashed yet before broadcasting its message}
+			
+			\asdif[\asdnotin{p}{crashedProcesses}]
+				\asdtrigger{bebBroadcast(mid, m)}
+			\asdend
+		\asdend
+	\asdend
+	
+	\asdupon[Crash(p)]	
+		\asdlinecomment{add process id to set on crash}
+		\asdassign{crashedProcesses}{\asdset{p}}
+	\asdend
+	
+\end{algorithmic}
+\end{document}
