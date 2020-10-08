@@ -11,6 +11,9 @@
 % Define tab size for indentation
 \algrenewcommand\algorithmicindent{2em}%
 
+% Basic command building block
+\newcommand{\state}[1]{\State #1;}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BLOCKS - \block[]
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -57,8 +60,6 @@
 \algblockdefx[asdindications]{asdindications}{asdend}
 {\textbf{Indications}}{}
 
-\newcommand{\state}[1]{\State #1;}
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % STATEMENTS - \statement{} or \statement{}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -86,6 +87,7 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % VALUES
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 % Booleans
 \newcommand{\asdfalse}[0]{$false$}
 \newcommand{\asdtrue}[0]{$true$}
