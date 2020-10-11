@@ -1,6 +1,6 @@
 # Usage
 
-Sample file - copy and paste to an empty file\
+Sample file - copy and paste to an empty file.
 
 ```latex
 

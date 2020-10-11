@@ -37,11 +37,11 @@
 [1][Unknown]{\textbf{If} (#1) \textbf{Then}}{}
 
 % Else for If
-\algcblockdefx[asdelse]{asdif}{asdelse}{asdend}
+\algcblockdefx[asdelsea]{asdif}{asdelsea}{asdend}
 {\textbf{Else}}{}
 
 % Else for Else If
-\algcblockdefx[asdelse2]{asdelseif}{asdelse2}{asdend}
+\algcblockdefx[asdelseb]{asdelseif}{asdelseb}{asdend}
 {\textbf{Else}}{}
 
 % Else If
@@ -63,6 +63,10 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % STATEMENTS - \statement{} or \statement{}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% Simple Statements
+\newcommand{\asdstatement}[1]{\state{#1}}
+\newcommand{\asdstatementbold}[1]{\state{\textbf{#1}}}
 
 % Trigger
 \newcommand{\asdtrigger}[1]{\state{\textbf{Trigger} #1}}
@@ -123,15 +127,43 @@
 % Union
 \newcommand{\asdunion}[2]{#1 $\bigcup$ #2}
 
-
 % Belongs to
 \newcommand{\asdin}[2]{#1 $\in$ #2}
 
 % Not belongs to
 \newcommand{\asdnotin}[2]{#1 $\notin$ #2}
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% Other
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\newcommand{\asdnewline}{\hfill\State}
+
 \begin{document}		
 \begin{algorithmic}[1]
+	\asdinterface
+		\asdrequests
+			\asdstatement{something()}
+		\asdend
+		\asdindications
+			\asdstatement{somethingElse()}
+		\asdend
+	\asdend
+	
+	\asdif[x > 2]
+		\asdstatement{something()}
+	\asdelseif[x > 3]		
+		\asdstatement{somethingElse()}
+	\asdelseb
+	  \asdstatement{somethingElse2()}
+	\asdend
+	
+	\asdif[x > 2]
+		\asdstatement{something()}
+	\asdelsea
+		\asdstatement{somethingElse()}
+	\asdend
+	
 	
 	\asdstate
 		\state{delivered} \asdcomment{set of all delivered message ids} 
@@ -155,9 +187,7 @@
 		\asdif[\asdnotin{mid}{delivered}]
 			\asdassign{delivered}{\asdunion{delivered}{\asdset{mid}}}
 			\asdtrigger{rbDeliver(m)}
-			
-			\State
-			
+			\asdnewline
 			\asdlinecomment{check if sender process hasn't crashed yet before broadcasting its message}
 			
 			\asdif[\asdnotin{p}{crashedProcesses}]
