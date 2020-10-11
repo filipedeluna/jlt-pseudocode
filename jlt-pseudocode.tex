@@ -62,6 +62,11 @@
 \algblockdefx[asdindications]{asdindications}{asdend}
 {\textbf{Indications}}{}
 
+% Procedure
+\algblockdefx[asdprocedure]{asdprocedure}{asdend}
+[1][Unknown]{\textbf{Procedure} (#1)}{}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % STATEMENTS - \statement{} or \statement{}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -90,7 +95,15 @@
 \newcommand{\asdlinecomment}[1]{\State {\color{OliveGreen}\space //\space #1}}
 
 % Comment (inline)
-\newcommand{\asdcomment}[1]{{\color{OliveGreen}\space //\space #1}}
+\makeatletter
+\newcommand{\asdcomment}[1]{
+	\parbox[t]{\dimexpr\linewidth-\ALG@thistlm-8em}{
+		\strut
+			\color{OliveGreen}\space //\space #1
+		\strut
+	}
+}
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % VALUES
