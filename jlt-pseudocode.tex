@@ -91,19 +91,27 @@
 	\state{\textbf{Return}\IfValueT{#1}{ #1}}
 }
 
-% Comment (entire line)
-\newcommand{\asdlinecomment}[1]{\State {\color{OliveGreen}\space //\space #1}}
-
 % Comment (inline)
 \makeatletter
 \newcommand{\asdcomment}[1]{
 	\parbox[t]{\dimexpr\linewidth-\ALG@thistlm-8em}{
 		\strut
-			\color{OliveGreen}\space //\space #1
+		\color{OliveGreen}//\space #1
 		\strut
 	}
 }
 \makeatother
+
+
+% Comment (entire line)
+\makeatletter
+\newcommand{\asdlinecomment}[1]{
+		\State \parbox[]{\dimexpr\textwidth-\leftmargin-\labelsep-\labelwidth}{
+			\color{OliveGreen}//\space #1
+		\strut}
+}
+\makeatother
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % VALUES
