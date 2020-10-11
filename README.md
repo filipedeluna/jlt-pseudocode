@@ -18,6 +18,7 @@ Sample file - copy and paste to a new empty Tex file.
 
 # Example
 
+````latex
 \asdinterface
 	\asdrequests
 	\asdstatement{request()}
@@ -43,4 +44,4 @@ Sample file - copy and paste to a new empty Tex file.
 \asdelse
 	\asdsetupptimer{newTimer(t, ``Fail'')}	
 \asdend
-
+````
