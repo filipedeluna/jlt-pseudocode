@@ -18,7 +18,7 @@ Sample file - copy and paste to a new empty Tex file.
 
 # Example
 
-````
+````latex
 \asdinterface
 	\asdrequests
 	\asdstatement{request()}
