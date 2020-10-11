@@ -1,10 +1,7 @@
 \documentclass[12pt]{article}
-
 \usepackage[a4paper, margin=2cm]{geometry}
 
-\usepackage{amsmath}
 \usepackage{algorithm}
-\usepackage{microtype}
 \usepackage[noend]{algpseudocode}
 \usepackage[dvipsnames]{xcolor}
 
@@ -138,68 +135,3 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \newcommand{\asdnewline}{\hfill\State}
-
-\begin{document}		
-\begin{algorithmic}[1]
-	\asdinterface
-		\asdrequests
-			\asdstatement{something()}
-		\asdend
-		\asdindications
-			\asdstatement{somethingElse()}
-		\asdend
-	\asdend
-	
-	\asdif[x > 2]
-		\asdstatement{something()}
-	\asdelseif[x > 3]		
-		\asdstatement{somethingElse()}
-	\asdelseb
-	  \asdstatement{somethingElse2()}
-	\asdend
-	
-	\asdif[x > 2]
-		\asdstatement{something()}
-	\asdelsea
-		\asdstatement{somethingElse()}
-	\asdend
-	
-	
-	\asdstate
-		\state{delivered} \asdcomment{set of all delivered message ids} 
-		\state{crashedProcesses} \asdcomment{map of crashed process ids} 
-	\asdend
-	
-	
-	\asdupon[Init]
-		\asdassign{delivered}{\asdset{}}
-		\asdassign{crashedProcesses}{\asdset{}}
-	\asdend
-	
-	\asdupon[rbBroadcast(m)]
-		\asdtrigger{rbDeliver(m)}
-		\asdassign{mid}{generateUniqueID(m)}
-		\asdassign{delivered}{\asdunion{delivered}{\asdset{mid}}}
-		\asdtrigger{bebBroadcast(mid, m)}
-	\asdend	
-	
-	\asdupon[bebDeliver(p, mid, m)]
-		\asdif[\asdnotin{mid}{delivered}]
-			\asdassign{delivered}{\asdunion{delivered}{\asdset{mid}}}
-			\asdtrigger{rbDeliver(m)}
-			\asdnewline
-			\asdlinecomment{check if sender process hasn't crashed yet before broadcasting its message}
-			
-			\asdif[\asdnotin{p}{crashedProcesses}]
-				\asdtrigger{bebBroadcast(mid, m)}
-			\asdend
-		\asdend
-	\asdend
-	
-	\asdupon[Crash(p)]	
-		\asdlinecomment{add process id to set on crash}
-		\asdassign{crashedProcesses}{\asdset{p}}
-	\asdend
-	
-\end{algorithmic}
-\end{document}

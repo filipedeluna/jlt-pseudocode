@@ -1,10 +1,10 @@
 # Usage
 
-Sample file - copy and paste to an empty file.
+Sample file - copy and paste to a new empty Tex file.
 
 ```latex
 
-\input{CHANGE/THIS/TO/YOUR/PATH/template}
+\input{CHANGE/THIS/TO/YOUR/PATH/jlt-pseudocode}
 
 \begin{document}		
 	\begin{algorithmic}[1]
