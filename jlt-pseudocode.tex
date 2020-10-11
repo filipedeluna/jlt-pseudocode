@@ -4,6 +4,7 @@
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
 \usepackage[dvipsnames]{xcolor}
+\usepackage{xparse}
 
 % Define tab size for indentation
 \algrenewcommand\algorithmicindent{2em}%
@@ -17,7 +18,7 @@
 
 % State, like all blocks ends with \asdend
 \algblockdefx[asdstate]{asdstate}{asdend}
-{\textbf{State}}{}
+{\textbf{State}}{}\usepackage{xparse}
 
 % Init
 \algblockdefx[asdinit]{asdinit}{asdend}
@@ -80,8 +81,10 @@
 % Call
 \newcommand{\asdcall}[1]{\state{\textbf{Call} #1}}
 
-% Return
-\newcommand{\asdreturn}[1]{\state{\textbf{Return} #1}}
+% Return - use [] due to xparse
+\NewDocumentCommand{\asdreturn}{o}{
+	\state{\textbf{Return}\IfValueT{#1}{ #1}}
+}
 
 % Comment (entire line)
 \newcommand{\asdlinecomment}[1]{\State {\color{OliveGreen}\space //\space #1}}
