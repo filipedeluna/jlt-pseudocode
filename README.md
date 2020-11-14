@@ -21,10 +21,10 @@ Sample file - copy and paste to a new empty Tex file.
 ````latex
 \asdinterface
 	\asdrequests
-	\asdstatement{request()}
+		\asdstatement{request()}
 	\asdend
 	\asdindications
-	\asdstatement{indication()}
+		\asdstatement{indication()}
 	\asdend
 \asdend
 
@@ -41,7 +41,7 @@ Sample file - copy and paste to a new empty Tex file.
 	\asdstatement{doStuff()}
 \asdelseif[someOtherCondition()]
 	\asdassign{thing}{newThing}
-\asdelse
+\asdelseb
 	\asdsetupptimer{newTimer(t, ``Fail'')}	
 \asdend
 ````

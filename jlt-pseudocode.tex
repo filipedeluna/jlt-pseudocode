@@ -1,16 +1,12 @@
-\documentclass[12pt]{article}
-\usepackage[a4paper, margin=2cm]{geometry}
-
 \usepackage{algorithm}
 \usepackage[noend]{algpseudocode}
-\usepackage[dvipsnames]{xcolor}
 \usepackage{xparse}
 
 % Define tab size for indentation
 \algrenewcommand\algorithmicindent{2em}%
 
 % Basic command building block
-\newcommand{\state}[1]{\State #1;}
+\newcommand{\statenew}[1]{\State #1;}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BLOCKS - \block[]
@@ -66,29 +62,32 @@
 \algblockdefx[asdprocedure]{asdprocedure}{asdend}
 [1][Unknown]{\textbf{Procedure} #1}{}
 
+% Forever
+\algblockdefx[asdforever]{asdforever}{asdend}
+{\textbf{Forever Do}}{}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % STATEMENTS - \statement{} or \statement{}{}
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Simple Statements
-\newcommand{\asdstatement}[1]{\state{#1}}
-\newcommand{\asdstatementbold}[1]{\state{\textbf{#1}}}
+\newcommand{\asdstatement}[1]{\statenew{#1}}
+\newcommand{\asdstatementbold}[1]{\statenew{\textbf{#1}}}
 
 % Trigger
-\newcommand{\asdtrigger}[1]{\state{\textbf{Trigger} #1}}
+\newcommand{\asdtrigger}[1]{\statenew{\textbf{Trigger} #1}}
 
 % Timer
-\newcommand{\asdsetuptimer}[1]{\state{\textbf{Setup Timer} #1}}
-\newcommand{\asdsetupptimer}[1]{\state{\textbf{Setup Periodic Timer} #1}}
-\newcommand{\asdcanceltimer}[1]{\state{\textbf{Cancel Timer} #1}}
+\newcommand{\asdsetuptimer}[1]{\statenew{\textbf{Setup Timer} #1}}
+\newcommand{\asdsetupptimer}[1]{\statenew{\textbf{Setup Periodic Timer} #1}}
+\newcommand{\asdcanceltimer}[1]{\statenew{\textbf{Cancel Timer} #1}}
 
 % Call
-\newcommand{\asdcall}[1]{\state{\textbf{Call} #1}}
+\newcommand{\asdcall}[1]{\statenew{\textbf{Call} #1}}
 
 % Return - use [] due to xparse
 \NewDocumentCommand{\asdreturn}{o}{
-	\state{\textbf{Return}\IfValueT{#1}{ #1}}
+	\statenew{\textbf{Return}\IfValueT{#1}{ #1}}
 }
 
 % Comment (inline)
@@ -96,7 +95,7 @@
 \newcommand{\asdcomment}[1]{
 	\parbox[t]{\dimexpr\linewidth-\ALG@thistlm-8em}{
 		\strut
-		\color{OliveGreen}//\space #1
+		//\space #1
 		\strut
 	}
 }
@@ -107,7 +106,7 @@
 \makeatletter
 \newcommand{\asdlinecomment}[1]{
 		\State \parbox[]{\dimexpr\textwidth-\leftmargin-\labelsep-\labelwidth}{
-			\color{OliveGreen}//\space #1
+			//\space #1
 		\strut}
 }
 \makeatother
@@ -127,18 +126,27 @@
 % Set 
 \newcommand{\asdset}[1]{$\{$#1$\}$}
 
+% Empty
+\newcommand{\asdempty}[1]{$\perp$}
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Algebraic
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 % Equals (assignment)
-\newcommand{\asdassign}[2]{\state{#1 $\longleftarrow$ #2}}
+\newcommand{\asdassign}[2]{\statenew{#1 $\longleftarrow$ #2}}
 
 % Equals (comparison)
 \newcommand{\asdeq}[2]{#1 $=$ #2}
 
 % Not equals
 \newcommand{\asdneq}[2]{#1 $\neq$ #2}
+
+% Exists
+\newcommand{\asdexists}[1]{$\exists$ #1}
+
+% Not Exists
+\newcommand{\asdnexists}[1]{$\nexists$ #1}
 
 % And
 \newcommand{\asdand}[2]{#1 $\wedge$ #2}
@@ -157,6 +165,9 @@
 
 % Not belongs to
 \newcommand{\asdnotin}[2]{#1 $\notin$ #2}
+
+% Empty Map Value
+\newcommand{\asdempty}[0]{$\perp$}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Other
