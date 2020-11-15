@@ -1,0 +1,62 @@
+%%
+%% This is file `sample-sigconf.tex',
+%% generated with the docstrip utility.
+%%
+%% The original source files were:
+%%
+%% samples.dtx  (with options: `sigconf')
+%% 
+%% IMPORTANT NOTICE:
+%% 
+%% For the copyright see the source file.
+%% 
+%% Any modified versions of this file must be renamed
+%% with new filenames distinct from sample-sigconf.tex.
+%% 
+%% For distribution of the original source see the terms
+%% for copying and modification in the file samples.dtx.
+%% 
+%% This generated file may be distributed as long as the
+%% original source files, as listed above, are part of the
+%% same distribution. (The sources need not necessarily be
+%% in the same archive or directory.)
+%%
+%% The first command in your LaTeX source must be the \documentclass command.
+\documentclass[sigconf]{acmart}
+\input{jlt-pseudocode.tex}
+
+\begin{document}
+\begin{algorithm}
+	\caption{Test Code}
+	\begin{algorithmic}
+		\asdinterface
+			\asdrequests
+				\asdstatement{request()}
+			\asdend
+			\asdindications
+				\asdstatement{indication()}
+			\asdend
+		\asdend
+		
+		\asdupon[request()]
+			\asdlinecomment{some comment}
+			\asdstatement{someThing()}
+		\asdend
+		
+		\asdupon[indication()]
+			\asdtrigger{someFunction()}
+		\asdend
+		
+		\asdif[\asdin{thing}{set})]
+			\asdstatement{doStuff()}
+		\asdelseif[someOtherCondition()]
+			\asdassign{thing}{newThing}
+		\asdelseb
+			\asdsetupptimer{newTimer(t, ``Fail'')}	
+		\asdend
+	\end{algorithmic}
+\end{algorithm}
+\end{document}
+\endinput
+%%
+%% End of file `sample-sigconf.tex'.
